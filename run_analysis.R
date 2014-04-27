@@ -50,7 +50,7 @@ merge_Xy=cbind(merge_X,merge_y)
 merge_Xy_subject=cbind(merge_Xy,merge_subject)
 #Merging data set,labels,subject file and activity lables using merge
 #TIDY Data Set 1
-merge_final=merge(merge_Xy_subject,activity_labels,by.x="LabelID",by.y="LabelID",all=TRUE)
+merge_final=merge(merge_Xy_subject,activity_labels,all=TRUE)
 
 #finding column names with "Mean" and "Std"
 meanstdcol=c(grep("mean[()]",names(merge_final),value=TRUE),grep("std[()]",names(merge_final),value=TRUE))
@@ -59,3 +59,5 @@ meanstdcol=c(grep("mean[()]",names(merge_final),value=TRUE),grep("std[()]",names
 merge_finalmelt<-melt(merge_final,id=c('LabelID','LabelDescription','SubjectID'),measure.var=c(meanstdcol))
 #TIDY Data Set 2
 Tidyset_2=dcast(merge_finalmelt,formula=LabelDescription+SubjectID ~ variable,mean)
+# Writing to text file for upload
+write.table(Tidyset_2, "./data/Tidydata.txt", sep="\t",row.names = FALSE)
