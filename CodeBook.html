@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<title>Code book for &ldquo;Getting and Cleaning Data - Peer Assignment&rdquo;</title>
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 12px;
+   margin: 8px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 { 
+   font-size:2.2em; 
+}
+
+h2 { 
+   font-size:1.8em; 
+}
+
+h3 { 
+   font-size:1.4em; 
+}
+
+h4 { 
+   font-size:1.0em; 
+}
+
+h5 { 
+   font-size:0.9em; 
+}
+
+h6 { 
+   font-size:0.8em; 
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre {	
+   margin-top: 0;
+   max-width: 95%;
+   border: 1px solid #ccc;
+   white-space: pre-wrap;
+}
+
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code.r, code.cpp {
+   background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * { 
+      background: transparent !important; 
+      color: black !important; 
+      filter:none !important; 
+      -ms-filter: none !important; 
+   }
+
+   body { 
+      font-size:12pt; 
+      max-width:100%; 
+   }
+       
+   a, a:visited { 
+      text-decoration: underline; 
+   }
+
+   hr { 
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote { 
+      padding-right: 1em; 
+      page-break-inside: avoid; 
+   }
+
+   tr, img { 
+      page-break-inside: avoid; 
+   }
+
+   img { 
+      max-width: 100% !important; 
+   }
+
+   @page :left { 
+      margin: 15mm 20mm 15mm 10mm; 
+   }
+     
+   @page :right { 
+      margin: 15mm 10mm 15mm 20mm; 
+   }
+
+   p, h2, h3 { 
+      orphans: 3; widows: 3; 
+   }
+
+   h2, h3 { 
+      page-break-after: avoid; 
+   }
+}
+
+</style>
+
+
+
+
+
+</head>
+
+<body>
+<h1>Code book for &ldquo;Getting and Cleaning Data - Peer Assignment&rdquo;</h1>
+
+<h2>Data Exracted</h2>
+
+<p>Following text files were uploaded to R variables, file.txt -&gt; variable</p>
+
+<ul>
+<li>activity_labels.txt -&gt; activity_labels</li>
+<li>features.txt -&gt; features</li>
+<li>subject_test.txt -&gt; subject_test</li>
+<li>subject_train.txt -&gt; subject_train</li>
+<li>X_test.txt -&gt; X_test</li>
+<li>X_train.txt -&gt; X_train</li>
+<li>y_test.txt -&gt; y_test</li>
+<li>y_train.txt -&gt; y_train</li>
+</ul>
+
+<h2>Variables and transformation</h2>
+
+<ul>
+<li>variables &ldquo;subject_train&rdquo; &amp; &ldquo;subject_test&rdquo; are merged into &ldquo;merge_subject&rdquo; using &ldquo;rbind&rdquo;</li>
+<li>column names are set for variable &ldquo;merge_subject&rdquo; as &#39;SubjectID&#39;</li>
+<li>column names are set for variable &ldquo;activity_labels&rdquo; as (&#39;LabelID&#39; &amp; &#39;LabelDescription&#39;)</li>
+<li>variables &ldquo;X_test&rdquo; &amp; &ldquo;X_train&rdquo; are merged into &ldquo;merge_X&rdquo; using &ldquo;rbind&rdquo;<br/></li>
+<li>column names are set for variable &ldquo;merge_X&rdquo; using the values from variable &ldquo;features column 2&rdquo;</li>
+<li>variables &ldquo;y_test&rdquo; &amp; &ldquo;y_train&rdquo; are merged into &ldquo;merge_y&rdquo; using &ldquo;rbind&rdquo;</li>
+<li>column names are set for variable &ldquo;merge_y&rdquo; as &#39;LabelID&#39;</li>
+<li>variables &ldquo;merge_X&rdquo; &amp; &ldquo;merge_y&rdquo; are merged into &ldquo;merge_Xy&rdquo; using &ldquo;rbind&rdquo;</li>
+<li>variables &ldquo;merge_Xy&rdquo; &amp; &ldquo;merge_subject&rdquo; are merged into &ldquo;merge_Xy_subject&rdquo; using &ldquo;cbind&rdquo;</li>
+<li>variables &ldquo;merge_Xy_subject&rdquo; &amp; &ldquo;activity_labels&rdquo; are merged into &ldquo;merge_final&rdquo; using &ldquo;merge&rdquo; on columns &#39;LabelID&#39;</li>
+<li>Using grep, finding the column names matching pattern Mean and Std and stored in variable &ldquo;meanstdcol&rdquo;</li>
+<li>Melting data frame &ldquo;merge_final&rdquo; using melt() function with id as (&#39;LabelID&#39;,&#39;LabelDescription&#39;,&#39;SubjectID&#39;) and variables as the input from the pattern matching &ldquo;meanstdcol&rdquo; into dataframe &ldquo;merge_finalmelt&rdquo;</li>
+<li>Now, to find the mean grouping by the &#39;LableDescription and SubjectID&#39; using dcast to dataframe &ldquo;Tidyset_2&rdquo;</li>
+<li>Finally writing the output from &ldquo;Tidyset_2&rdquo; to text file &ldquo;Tidydata.txt&rdquo;</li>
+</ul>
+
+</body>
+
+</html>
+
