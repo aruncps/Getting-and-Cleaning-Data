@@ -10,7 +10,7 @@ To create one R script called run_analysis.R that does the following. Merges the
 * File Link: https://github.com/aruncps/Getting-and-Cleaning-Data/blob/master/Tidydata.txt
 
 ## Code Book
-* File Link: 
+* File Link: https://github.com/aruncps/Getting-and-Cleaning-Data/blob/master/CodeBook.md
 
 ## Recipe (R Code and steps to reproduce)
 * File Link: https://github.com/aruncps/Getting-and-Cleaning-Data/blob/master/run_analysis.R
